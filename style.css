@@ -1741,46 +1741,75 @@ select {
     visibility: visible !important;
     opacity: 1 !important;
 }
-/* Brand Container */
-.eduviora-logo {
+/* =========================================
+   EDUVIORA EXACT BRAND TYPOGRAPHY & COLORS
+========================================= */
+
+.eduviora-brand {
     display: flex !important;
     align-items: center !important;
-    gap: 10px;
-    text-decoration: none;
+    gap: 12px !important;
+    text-decoration: none !important;
 }
 
-/* Icon */
-.brand-icon {
-    height: 42px !important;
+/* Image Icon */
+.eduviora-brand .brand-symbol {
+    height: 44px !important;
     width: auto !important;
+    max-width: 50px !important;
     display: block !important;
+    object-fit: contain !important;
 }
 
 /* Text Container */
-.brand-text {
+.brand-text-block {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     line-height: 1;
 }
 
-/* "EDUVIORA" in deep royal blue with cyan/teal accented 'A' */
-.brand-name {
+/* Main Heading "EDUVIOR" in Brand Blue */
+.brand-title {
+    font-family: 'Montserrat', 'Segoe UI', Roboto, sans-serif;
     font-size: 20px;
     font-weight: 900;
-    letter-spacing: 1px;
-    color: #0d47a1; /* Deep Brand Blue */
+    letter-spacing: 1.5px;
+    color: #0052cc; /* Accurate Rich Brand Blue */
+    display: flex;
+    align-items: center;
 }
 
-.brand-name span {
-    color: #00bcd4; /* Cyan / Teal Accent */
+/* Custom Cyan Accent 'A' without crossbar */
+.brand-title .brand-a {
+    color: #00a8cc; /* Accurate Cyan / Turquoise */
+    font-weight: 900;
+    margin-left: 1px;
 }
 
-/* "ERP" subtitle */
-.brand-tagline {
-    font-size: 11px;
+/* "— ERP —" with flanking divider lines */
+.brand-subtitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 3px;
+}
+
+.brand-subtitle .sub-text {
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    font-size: 10px;
     font-weight: 800;
-    letter-spacing: 3px;
-    color: #1e88e5;
-    margin-top: 2px;
+    letter-spacing: 2px;
+    color: #0052cc;
 }
+
+.brand-subtitle .sub-line {
+    display: block;
+    height: 1.5px;
+    flex: 1;
+    background-color: #0052cc;
+    opacity: 0.8;
+}
+
 
