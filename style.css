@@ -1741,4 +1741,46 @@ select {
     visibility: visible !important;
     opacity: 1 !important;
 }
+/* Brand Container */
+.eduviora-logo {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px;
+    text-decoration: none;
+}
+
+/* Icon */
+.brand-icon {
+    height: 42px !important;
+    width: auto !important;
+    display: block !important;
+}
+
+/* Text Container */
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+/* "EDUVIORA" in deep royal blue with cyan/teal accented 'A' */
+.brand-name {
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #0d47a1; /* Deep Brand Blue */
+}
+
+.brand-name span {
+    color: #00bcd4; /* Cyan / Teal Accent */
+}
+
+/* "ERP" subtitle */
+.brand-tagline {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #1e88e5;
+    margin-top: 2px;
+}
 
