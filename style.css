@@ -1720,25 +1720,18 @@ select {
         flex-direction: column;
     }
 
-}
-/* EDUVIORA LOGO */
+}/* Eduviora Logo Display Fix */
 .eduviora-logo {
     display: flex !important;
     align-items: center !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    width: 180px;
-    height: auto;
-    text-decoration: none;
-    flex-shrink: 0;
 }
 
 .eduviora-logo img {
+    height: 50px !important;
+    width: auto !important;
+    max-width: 180px !important;
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 180px !important;
-    height: auto !important;
-    max-width: 180px !important;
-    object-fit: contain;
 }
+
