@@ -1812,4 +1812,13 @@ select {
     opacity: 0.8;
 }
 
+/* Prevent Header Image Overflow */
+header img,
+.header img,
+.navbar img {
+    max-height: 45px !important;
+    width: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+}
 
