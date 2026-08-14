@@ -81,52 +81,59 @@ select {
 
     border-bottom: 1px solid rgba(226, 232, 240, 0.8);
 }
+/* =========================================
+   HEADER & LOGO
+========================================= */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
 
 .nav-container {
     min-height: 78px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 25px;
 }
 
-/* LOGO */
-
-.logo {
+/* LOGO FIX */
+.eduviora-logo {
     display: flex;
     align-items: center;
-    gap: 10px;
-
-    font-weight: 800;
-    font-size: 24px;
-
-    color: var(--dark);
+    text-decoration: none;
 }
 
-.logo-icon {
-    width: 42px;
-    height: 42px;
-
-    display: grid;
-    place-items: center;
-
-    border-radius: 12px;
-
-    color: white;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--primary),
-            var(--secondary)
-        );
-
-    box-shadow:
-        0 8px 20px rgba(37, 99, 235, 0.25);
+.eduviora-logo img {
+    height: 48px;
+    width: auto;
+    max-width: 190px;
+    display: block;
+    object-fit: contain;
 }
 
-.logo-text span {
+/* NAVIGATION */
+.navbar {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.navbar a {
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+    transition: 0.3s;
+}
+
+.navbar a:hover {
     color: var(--primary);
 }
 
