@@ -1299,7 +1299,7 @@
 document.getElementById('contactForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const submitBtn = document.getElementById('submitBtn') || this.querySelector('button[type="submit"]');
+    const submitBtn = this.querySelector('button[type="submit"]');
     const originalBtnText = submitBtn.textContent;
 
     const name = document.getElementById('user_name').value.trim();
@@ -1308,11 +1308,10 @@ document.getElementById('contactForm').addEventListener('submit', function(event
     const solution = document.getElementById('user_solution').value;
     const message = document.getElementById('user_message').value.trim();
 
-    // Visual button feedback
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending...';
 
-    // 1. WhatsApp Redirection URL
+    // 1. Format WhatsApp text
     const waText = `*New Inquiry via Eduviora Website*%0A%0A` +
                    `*Name:* ${encodeURIComponent(name)}%0A` +
                    `*Phone:* ${encodeURIComponent(phone)}%0A` +
@@ -1322,7 +1321,7 @@ document.getElementById('contactForm').addEventListener('submit', function(event
 
     const waUrl = `https://wa.me/919000846009?text=${waText}`;
 
-    // 2. EmailJS Payload
+    // 2. EmailJS payload
     const templateParams = {
         from_name: name,
         phone: phone,
@@ -1334,21 +1333,21 @@ document.getElementById('contactForm').addEventListener('submit', function(event
 
     emailjs.send('service_eduviora', 'template_2vlmhhp', templateParams)
         .then(function() {
-            alert('Your message has been sent to sales@eduviora.in! Opening WhatsApp...');
-            window.open(waUrl, '_blank');
+            alert('Your message has been sent! Opening WhatsApp now...');
+            window.location.href = waUrl;
             document.getElementById('contactForm').reset();
             submitBtn.disabled = false;
             submitBtn.textContent = originalBtnText;
         })
         .catch(function(error) {
             console.error('EmailJS Error:', error);
-            alert('Redirecting to WhatsApp to submit your message...');
-            window.open(waUrl, '_blank');
+            window.location.href = waUrl;
             submitBtn.disabled = false;
             submitBtn.textContent = originalBtnText;
         });
 });
 </script>
+
 
 </body>
 </html>
