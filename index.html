@@ -1294,15 +1294,408 @@
 >
     <span>💬</span>
 </a>
-<!-- EmailJS SDK v4 -->
+<!-- =====================================================
+     EDUVIORA CONTACT FORM
+===================================================== -->
+
+<form id="contactForm">
+
+    <div class="form-group">
+        <label for="user_name">Name</label>
+        <input
+            type="text"
+            id="user_name"
+            name="from_name"
+            placeholder="Enter your name"
+            required
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="user_phone">Phone</label>
+        <input
+            type="tel"
+            id="user_phone"
+            name="phone"
+            placeholder="Enter your phone number"
+            required
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="user_email">Email</label>
+        <input
+            type="email"
+            id="user_email"
+            name="from_email"
+            placeholder="Enter your email"
+            required
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="user_solution">Solution</label>
+
+        <select
+            id="user_solution"
+            name="solution"
+            required
+        >
+            <option value="">Select a solution</option>
+            <option value="School ERP">School ERP</option>
+            <option value="College ERP">College ERP</option>
+            <option value="Business ERP">Business ERP</option>
+            <option value="Website Development">Website Development</option>
+            <option value="Mobile App Development">Mobile App Development</option>
+            <option value="Custom Software">Custom Software</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="user_message">Message</label>
+
+        <textarea
+            id="user_message"
+            name="message"
+            rows="6"
+            placeholder="Tell us what you need..."
+            required
+        ></textarea>
+    </div>
+
+    <button
+        type="submit"
+        id="contactSubmitBtn"
+    >
+        Send Message
+    </button>
+
+</form>
+
+
+<!-- =====================================================
+     EMAILJS SDK v4
+===================================================== -->
+
 <script
     src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
 </script>
 
-<!-- Eduviora Contact Form -->
-<script src="script.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =====================================================
+       EMAILJS CONFIGURATION
+    ===================================================== */
+
+    const PUBLIC_KEY = "xqdwGfK4cMabVNkIF";
+    const SERVICE_ID = "service_eduviora";
+    const TEMPLATE_ID = "template_2vlmhhp";
 
 
+    /* =====================================================
+       INITIALIZE EMAILJS
+    ===================================================== */
+
+    emailjs.init({
+        publicKey: PUBLIC_KEY
+    });
+
+
+    /* =====================================================
+       GET FORM
+    ===================================================== */
+
+    const contactForm =
+        document.getElementById("contactForm");
+
+    const submitBtn =
+        document.getElementById("contactSubmitBtn");
+
+
+    if (!contactForm) {
+
+        console.error(
+            "Eduviora: contactForm not found."
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       FORM SUBMIT
+    ===================================================== */
+
+    contactForm.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
+
+
+            /* =============================================
+               PREVENT DOUBLE SUBMISSION
+            ============================================= */
+
+            if (submitBtn) {
+
+                submitBtn.disabled = true;
+
+                submitBtn.textContent =
+                    "Sending email...";
+            }
+
+
+            /* =============================================
+               GET FORM VALUES
+            ============================================= */
+
+            const name =
+                document.getElementById("user_name")
+                .value
+                .trim();
+
+            const phone =
+                document.getElementById("user_phone")
+                .value
+                .trim();
+
+            const email =
+                document.getElementById("user_email")
+                .value
+                .trim();
+
+            const solution =
+                document.getElementById("user_solution")
+                .value;
+
+            const message =
+                document.getElementById("user_message")
+                .value
+                .trim();
+
+
+            /* =============================================
+               VALIDATION
+            ============================================= */
+
+            if (
+                !name ||
+                !phone ||
+                !email ||
+                !solution ||
+                !message
+            ) {
+
+                alert(
+                    "Please fill in all fields."
+                );
+
+                if (submitBtn) {
+
+                    submitBtn.disabled = false;
+
+                    submitBtn.textContent =
+                        "Send Message";
+                }
+
+                return;
+            }
+
+
+            /* =============================================
+               SEND EMAIL USING EMAILJS
+            ============================================= */
+
+            emailjs.sendForm(
+                SERVICE_ID,
+                TEMPLATE_ID,
+                contactForm
+            )
+
+            .then(function (response) {
+
+                console.log(
+                    "EMAILJS SUCCESS:",
+                    response.status,
+                    response.text
+                );
+
+
+                /* =========================================
+                   SUCCESS MESSAGE
+                ========================================= */
+
+                alert(
+                    "Thank you!\n\n" +
+                    "Your inquiry has been sent successfully."
+                );
+
+
+                /* =========================================
+                   WHATSAPP MESSAGE
+                ========================================= */
+
+                const whatsappMessage =
+
+                    "*New Inquiry via Eduviora Website*" +
+                    "\n\n" +
+
+                    "*Name:* " +
+                    name +
+
+                    "\n" +
+
+                    "*Phone:* " +
+                    phone +
+
+                    "\n" +
+
+                    "*Email:* " +
+                    email +
+
+                    "\n" +
+
+                    "*Solution:* " +
+                    solution +
+
+                    "\n" +
+
+                    "*Message:* " +
+                    message;
+
+
+                const encodedMessage =
+                    encodeURIComponent(
+                        whatsappMessage
+                    );
+
+
+                /* =========================================
+                   EDUVIORA WHATSAPP NUMBER
+                   9000846009
+                ========================================= */
+
+                const whatsappNumber =
+                    "919000846009";
+
+
+                const isMobile =
+                    /Android|iPhone|iPad|iPod/i.test(
+                        navigator.userAgent
+                    );
+
+
+                let whatsappURL;
+
+
+                if (isMobile) {
+
+                    whatsappURL =
+                        "whatsapp://send?phone=" +
+                        whatsappNumber +
+                        "&text=" +
+                        encodedMessage;
+
+                } else {
+
+                    whatsappURL =
+                        "https://web.whatsapp.com/send?phone=" +
+                        whatsappNumber +
+                        "&text=" +
+                        encodedMessage;
+                }
+
+
+                /* =========================================
+                   RESET FORM
+                ========================================= */
+
+                contactForm.reset();
+
+
+                if (submitBtn) {
+
+                    submitBtn.disabled = false;
+
+                    submitBtn.textContent =
+                        "Send Message";
+                }
+
+
+                /* =========================================
+                   OPEN WHATSAPP AFTER EMAIL SUCCESS
+                ========================================= */
+
+                setTimeout(function () {
+
+                    window.location.href =
+                        whatsappURL;
+
+                }, 800);
+
+            })
+
+
+            /* =============================================
+               EMAIL ERROR
+            ============================================= */
+
+            .catch(function (error) {
+
+                console.error(
+                    "EMAILJS ERROR:",
+                    error
+                );
+
+
+                let errorText =
+                    "Unable to send your inquiry.";
+
+
+                if (error && error.text) {
+
+                    errorText =
+                        error.text;
+                }
+
+
+                alert(
+                    "EmailJS Error:\n\n" +
+                    errorText
+                );
+
+
+                /* =========================================
+                   RESTORE BUTTON
+                ========================================= */
+
+                if (submitBtn) {
+
+                    submitBtn.disabled = false;
+
+                    submitBtn.textContent =
+                        "Send Message";
+                }
+
+
+                /* =========================================
+                   IMPORTANT:
+                   DO NOT OPEN WHATSAPP IF EMAIL FAILED
+                ========================================= */
+
+            });
+
+        }
+    );
+
+});
+
+</script>
 
 
 </body>
