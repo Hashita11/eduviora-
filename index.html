@@ -1271,9 +1271,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const contactForm = document.getElementById("contactForm");
     if (!contactForm) return;
 
-    emailjs.init("xqdwGfK4cMabVNkIF");
-
-    contactForm.addEventListener("submit", function (event) {
+    contactForm.addEventListener("submit", async function (event) {
         event.preventDefault();
 
         const submitBtn = this.querySelector('button[type="submit"]');
@@ -1290,6 +1288,7 @@ document.addEventListener("DOMContentLoaded", function () {
             submitBtn.textContent = "Sending...";
         }
 
+        // 1. WhatsApp Configuration
         const whatsappNumber = "919000846009";
         const rawMessage = `*New Inquiry via Eduviora Website*\n\n` +
                            `*Name:* ${name}\n` +
@@ -1304,38 +1303,47 @@ document.addEventListener("DOMContentLoaded", function () {
             ? `whatsapp://send?phone=${whatsappNumber}&text=${encodedMessage}`
             : `https://web.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedMessage}`;
 
-        const templateParams = {
-            from_name: name,
-            phone: phone,
-            from_email: email,
-            solution: solution,
-            message: message,
-            to_email: "sales@eduviora.in"
+        // 2. Direct EmailJS REST Payload
+        const payload = {
+            service_id: "service_eduviora",
+            template_id: "template_2vlmhhp",
+            user_id: "xqdwGfK4cMabVNkIF",
+            template_params: {
+                from_name: name,
+                phone: phone,
+                from_email: email,
+                solution: solution,
+                message: message,
+                to_email: "sales@eduviora.in"
+            }
         };
 
-        emailjs.send("service_eduviora", "template_2vlmhhp", templateParams, "xqdwGfK4cMabVNkIF")
-            .then(function () {
-                contactForm.reset();
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalBtnText;
-                }
-                setTimeout(() => {
-                    window.location.href = whatsappURL;
-                }, 400);
-            })
-            .catch(function (error) {
-                console.error("EMAILJS ERROR:", error);
-                const errorText = error?.text || JSON.stringify(error);
-                alert("EmailJS Error:\n\n" + errorText);
-
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalBtnText;
-                }
+        try {
+            const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
             });
+
+            if (!response.ok) {
+                const err = await response.text();
+                console.error("EmailJS API response:", err);
+            }
+        } catch (err) {
+            console.error("Network dispatch error:", err);
+        } finally {
+            contactForm.reset();
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+            }
+            window.location.href = whatsappURL;
+        }
     });
 });
+
 
 
 </script>
