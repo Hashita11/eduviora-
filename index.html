@@ -1002,119 +1002,85 @@
             </div>
 
 
-            <form class="contact-form" id="contactForm">
+            <!-- =====================================================
+     EDUVIORA CONTACT FORM
+===================================================== -->
 
-    <div class="form-row">
-
-        <div class="form-group">
-
-            <label>Your Name</label>
-
-            <input
-                type="text"
-                id="user_name"
-                name="from_name"
-                placeholder="Enter your name"
-                required
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Phone</label>
-
-            <input
-                type="tel"
-                id="user_phone"
-                name="phone"
-                placeholder="Enter phone number"
-                required
-            >
-
-        </div>
-
-    </div>
-
+<form id="contactForm">
 
     <div class="form-group">
+        <label for="user_name">Name</label>
+        <input
+            type="text"
+            id="user_name"
+            name="from_name"
+            placeholder="Enter your name"
+            required
+        >
+    </div>
 
-        <label>Email</label>
+    <div class="form-group">
+        <label for="user_phone">Phone</label>
+        <input
+            type="tel"
+            id="user_phone"
+            name="phone"
+            placeholder="Enter your phone number"
+            required
+        >
+    </div>
 
+    <div class="form-group">
+        <label for="user_email">Email</label>
         <input
             type="email"
             id="user_email"
             name="from_email"
-            placeholder="Enter email address"
+            placeholder="Enter your email"
             required
         >
-
     </div>
 
-
     <div class="form-group">
+        <label for="user_solution">Solution</label>
 
-        <label>What do you need?</label>
-
-        <select id="user_solution" name="solution" required>
-
-            <option value="">
-                Select a solution
-            </option>
-
-            <option value="Education ERP">
-                Education ERP
-            </option>
-
-            <option value="Business ERP">
-                Business ERP
-            </option>
-
-            <option value="Billing Software">
-                Billing Software
-            </option>
-
-            <option value="Custom Software">
-                Custom Software
-            </option>
-
-            <option value="Automation">
-                Automation
-            </option>
-
-            <option value="Other">
-                Other
-            </option>
-
+        <select
+            id="user_solution"
+            name="solution"
+            required
+        >
+            <option value="">Select a solution</option>
+            <option value="School ERP">School ERP</option>
+            <option value="College ERP">College ERP</option>
+            <option value="Business ERP">Business ERP</option>
+            <option value="Website Development">Website Development</option>
+            <option value="Mobile App Development">Mobile App Development</option>
+            <option value="Custom Software">Custom Software</option>
+            <option value="Other">Other</option>
         </select>
-
     </div>
 
-
     <div class="form-group">
-
-        <label>Message</label>
+        <label for="user_message">Message</label>
 
         <textarea
             id="user_message"
             name="message"
-            rows="5"
-            placeholder="Tell us about your requirement..."
+            rows="6"
+            placeholder="Tell us what you need..."
             required
         ></textarea>
-
     </div>
-
 
     <button
         type="submit"
-        class="submit-button"
+        id="contactSubmitBtn"
     >
-        Send Message →
+        Send Message
     </button>
 
 </form>
+
 
         </div>
 
@@ -1294,84 +1260,6 @@
 >
     <span>💬</span>
 </a>
-<!-- =====================================================
-     EDUVIORA CONTACT FORM
-===================================================== -->
-
-<form id="contactForm">
-
-    <div class="form-group">
-        <label for="user_name">Name</label>
-        <input
-            type="text"
-            id="user_name"
-            name="from_name"
-            placeholder="Enter your name"
-            required
-        >
-    </div>
-
-    <div class="form-group">
-        <label for="user_phone">Phone</label>
-        <input
-            type="tel"
-            id="user_phone"
-            name="phone"
-            placeholder="Enter your phone number"
-            required
-        >
-    </div>
-
-    <div class="form-group">
-        <label for="user_email">Email</label>
-        <input
-            type="email"
-            id="user_email"
-            name="from_email"
-            placeholder="Enter your email"
-            required
-        >
-    </div>
-
-    <div class="form-group">
-        <label for="user_solution">Solution</label>
-
-        <select
-            id="user_solution"
-            name="solution"
-            required
-        >
-            <option value="">Select a solution</option>
-            <option value="School ERP">School ERP</option>
-            <option value="College ERP">College ERP</option>
-            <option value="Business ERP">Business ERP</option>
-            <option value="Website Development">Website Development</option>
-            <option value="Mobile App Development">Mobile App Development</option>
-            <option value="Custom Software">Custom Software</option>
-            <option value="Other">Other</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="user_message">Message</label>
-
-        <textarea
-            id="user_message"
-            name="message"
-            rows="6"
-            placeholder="Tell us what you need..."
-            required
-        ></textarea>
-    </div>
-
-    <button
-        type="submit"
-        id="contactSubmitBtn"
-    >
-        Send Message
-    </button>
-
-</form>
 
 
 <!-- =====================================================
