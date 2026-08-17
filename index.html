@@ -1294,80 +1294,193 @@
 >
     <span>💬</span>
 </a>
-<!-- EmailJS SDK -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script type="text/javascript">
-  (function() {
-    emailjs.init({
-      publicKey: "xqdwGfK4cMabVNkIF"
-    });
-  })();
+<!-- =========================
+     EMAILJS SDK v4
+========================= -->
+<script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
 </script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const contactForm = document.getElementById('contactForm');
-    if (!contactForm) return;
 
-    contactForm.addEventListener('submit', function(event) {
+    // =========================
+    // EMAILJS CONFIGURATION
+    // =========================
+    const PUBLIC_KEY = "xqdwGfK4cMabVNkIF";
+    const SERVICE_ID = "service_eduviora";
+    const TEMPLATE_ID = "template_2vlmhhp";
+
+    // Initialize EmailJS
+    emailjs.init({
+        publicKey: PUBLIC_KEY
+    });
+
+    // =========================
+    // CONTACT FORM
+    // =========================
+    const contactForm = document.getElementById("contactForm");
+
+    if (!contactForm) {
+        console.error("contactForm not found");
+        return;
+    }
+
+    contactForm.addEventListener("submit", function (event) {
+
         event.preventDefault();
 
-        const submitBtn = this.querySelector('button[type="submit"]');
-        const originalBtnText = submitBtn ? submitBtn.textContent : 'Send Message';
+        // =========================
+        // SUBMIT BUTTON
+        // =========================
+        const submitBtn = this.querySelector(
+            'button[type="submit"]'
+        );
 
-        const name = document.getElementById('user_name').value.trim();
-        const phone = document.getElementById('user_phone').value.trim();
-        const email = document.getElementById('user_email').value.trim();
-        const solution = document.getElementById('user_solution').value;
-        const message = document.getElementById('user_message').value.trim();
+        const originalBtnText = submitBtn
+            ? submitBtn.textContent
+            : "Send Message";
 
-        if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending email...';
+        // =========================
+        // FORM VALUES
+        // =========================
+        const nameField = document.getElementById("user_name");
+        const phoneField = document.getElementById("user_phone");
+        const emailField = document.getElementById("user_email");
+        const solutionField = document.getElementById("user_solution");
+        const messageField = document.getElementById("user_message");
+
+        if (
+            !nameField ||
+            !phoneField ||
+            !emailField ||
+            !solutionField ||
+            !messageField
+        ) {
+            alert("Form fields are missing. Please check your HTML field IDs.");
+            return;
         }
 
-        const waRawMessage = `*New Inquiry via Eduviora Website*\n\n` +
-                             `*Name:* ${name}\n` +
-                             `*Phone:* ${phone}\n` +
-                             `*Email:* ${email}\n` +
-                             `*Solution:* ${solution}\n` +
-                             `*Message:* ${message}`;
+        const name = nameField.value.trim();
+        const phone = phoneField.value.trim();
+        const email = emailField.value.trim();
+        const solution = solutionField.value;
+        const message = messageField.value.trim();
 
-        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-        const waRedirectUrl = isMobile 
+        // =========================
+        // BASIC VALIDATION
+        // =========================
+        if (!name || !phone || !email || !solution || !message) {
+            alert("Please fill in all required fields.");
+            return;
+        }
+
+        // =========================
+        // BUTTON - SENDING
+        // =========================
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Sending email...";
+        }
+
+        // =========================
+        // WHATSAPP MESSAGE
+        // =========================
+        const waRawMessage =
+            `*New Inquiry via Eduviora Website*\n\n` +
+            `*Name:* ${name}\n` +
+            `*Phone:* ${phone}\n` +
+            `*Email:* ${email}\n` +
+            `*Solution:* ${solution}\n` +
+            `*Message:* ${message}`;
+
+        const isMobile =
+            /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+        const waRedirectUrl = isMobile
             ? `whatsapp://send?phone=919000846009&text=${encodeURIComponent(waRawMessage)}`
             : `https://web.whatsapp.com/send?phone=919000846009&text=${encodeURIComponent(waRawMessage)}`;
 
+        // =========================
+        // EMAILJS TEMPLATE DATA
+        // =========================
         const templateParams = {
             from_name: name,
             phone: phone,
             from_email: email,
             solution: solution,
-            message: message,
-            to_email: 'sales@eduviora.in'
+            message: message
         };
 
-        // Send email via EmailJS
-        emailjs.send('service_eduviora', 'template_2vlmhhp', templateParams)
-            .then(function(response) {
-                alert('Email successfully sent! Opening WhatsApp...');
-                contactForm.reset();
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalBtnText;
-                }
+        // =========================
+        // SEND EMAIL
+        // =========================
+        emailjs.send(
+            SERVICE_ID,
+            TEMPLATE_ID,
+            templateParams
+        )
+
+        .then(function (response) {
+
+            console.log(
+                "EmailJS SUCCESS:",
+                response.status,
+                response.text
+            );
+
+            alert(
+                "Inquiry sent successfully to sales@eduviora.in!"
+            );
+
+            // Reset form
+            contactForm.reset();
+
+            // Restore button
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+            }
+
+            // =========================
+            // OPEN WHATSAPP ONLY AFTER
+            // SUCCESSFUL EMAIL
+            // =========================
+            setTimeout(function () {
                 window.location.href = waRedirectUrl;
-            })
-            .catch(function(error) {
-                // Show exact error details
-                alert('EmailJS Error: ' + (error.text || JSON.stringify(error)));
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalBtnText;
-                }
-                window.location.href = waRedirectUrl;
-            });
+            }, 500);
+
+        })
+
+        .catch(function (error) {
+
+            console.error("EmailJS ERROR:", error);
+
+            let errorMessage = "Unable to send email.";
+
+            if (error && error.text) {
+                errorMessage += "\n\n" + error.text;
+            }
+
+            alert(
+                "EmailJS Error:\n\n" +
+                errorMessage +
+                "\n\nPlease try again."
+            );
+
+            // Restore button
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+            }
+
+            // IMPORTANT:
+            // Do NOT open WhatsApp when email fails.
+        });
+
     });
+
 });
 </script>
 
