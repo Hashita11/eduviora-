@@ -1306,7 +1306,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const contactForm = document.getElementById('contactForm');
     if (!contactForm) return;
 
-    contactForm.addEventListener('submit', function(event) {
+    contactForm.addEventListener('submit', async function(event) {
         event.preventDefault();
 
         const submitBtn = this.querySelector('button[type="submit"]');
@@ -1349,32 +1349,24 @@ document.addEventListener("DOMContentLoaded", function () {
             to_email: 'sales@eduviora.in'
         };
 
-        // 3. Send Email and trigger WhatsApp
-        emailjs.send('service_eduviora', 'template_2vlmhhp', templateParams)
-            .then(function(response) {
-                console.log('EmailJS Success:', response.status, response.text);
-                contactForm.reset();
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalBtnText;
-                }
-                window.location.href = waRedirectUrl;
-            })
-            .catch(function(error) {
-                console.error('EmailJS Error Details:', error);
-                // Fallback to WhatsApp even if email fails
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalBtnText;
-                }
-                window.location.href = waRedirectUrl;
-            });
+        try {
+            // Await EmailJS delivery confirmation BEFORE opening WhatsApp
+            await emailjs.send('service_eduviora', 'template_2vlmhhp', templateParams);
+        } catch (error) {
+            console.error('EmailJS Error:', error);
+        } finally {
+            contactForm.reset();
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+            }
+            // Trigger WhatsApp app after email API finishes
+            window.location.href = waRedirectUrl;
+        }
     });
 });
+
 </script>
-
-
-
 
 </body>
 </html>
