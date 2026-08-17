@@ -1297,7 +1297,11 @@
 <!-- EmailJS SDK -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script type="text/javascript">
-  emailjs.init("xqdwGfK4cMabVNkIF");
+  (function() {
+    emailjs.init({
+      publicKey: "xqdwGfK4cMabVNkIF"
+    });
+  })();
 </script>
 
 <script>
@@ -1343,10 +1347,10 @@ document.addEventListener("DOMContentLoaded", function () {
             to_email: 'sales@eduviora.in'
         };
 
-        // Send email and wait for completion
+        // Send email via EmailJS
         emailjs.send('service_eduviora', 'template_2vlmhhp', templateParams)
             .then(function(response) {
-                alert('Email sent successfully to sales@eduviora.in! Opening WhatsApp now...');
+                alert('Email successfully sent! Opening WhatsApp...');
                 contactForm.reset();
                 if (submitBtn) {
                     submitBtn.disabled = false;
@@ -1355,7 +1359,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.location.href = waRedirectUrl;
             })
             .catch(function(error) {
-                alert('EmailJS Error: ' + JSON.stringify(error.text || error));
+                // Show exact error details
+                alert('EmailJS Error: ' + (error.text || JSON.stringify(error)));
                 if (submitBtn) {
                     submitBtn.disabled = false;
                     submitBtn.textContent = originalBtnText;
@@ -1365,6 +1370,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
+
 
 
 
