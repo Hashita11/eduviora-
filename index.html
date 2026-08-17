@@ -1262,15 +1262,17 @@
 </a>
 
 
-<!-- =====================================================
-     EMAILJS SDK v4
-===================================================== -->
 
+<!-- EmailJS SDK -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-
-            document.addEventListener("DOMContentLoaded", function () {
+<script>
+document.addEventListener("DOMContentLoaded", function () {
     const contactForm = document.getElementById("contactForm");
     if (!contactForm) return;
+
+    // Direct initialization
+    emailjs.init("xqdwGfK4cMabVNkIF");
 
     contactForm.addEventListener("submit", function (event) {
         event.preventDefault();
@@ -1289,7 +1291,6 @@
             submitBtn.textContent = "Sending...";
         }
 
-        // WhatsApp number and formatted message text
         const whatsappNumber = "919000846009";
         const rawMessage = `*New Inquiry via Eduviora Website*\n\n` +
                            `*Name:* ${name}\n` +
@@ -1299,12 +1300,11 @@
                            `*Message:* ${message}`;
         const encodedMessage = encodeURIComponent(rawMessage);
 
-        // Native app link on mobile, web link on desktop
-        const whatsappURL = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        const whatsappURL = isMobile
             ? `whatsapp://send?phone=${whatsappNumber}&text=${encodedMessage}`
             : `https://web.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedMessage}`;
 
-        // Payload for EmailJS
         const templateParams = {
             from_name: name,
             phone: phone,
@@ -1314,22 +1314,21 @@
             to_email: "sales@eduviora.in"
         };
 
-        // Send via EmailJS first
-        emailjs.send("service_eduviora", "template_2vlmhhp", templateParams)
+        // 4th argument explicitly provides the Public Key
+        emailjs.send("service_eduviora", "template_2vlmhhp", templateParams, "xqdwGfK4cMabVNkIF")
             .then(function () {
                 contactForm.reset();
                 if (submitBtn) {
                     submitBtn.disabled = false;
                     submitBtn.textContent = originalBtnText;
                 }
-                // Redirect to WhatsApp on email success
                 setTimeout(() => {
                     window.location.href = whatsappURL;
-                }, 800);
+                }, 400);
             })
             .catch(function (error) {
                 console.error("EMAILJS ERROR:", error);
-                const errorText = error?.text || "Unable to send your inquiry.";
+                const errorText = error?.text || JSON.stringify(error);
                 alert("EmailJS Error:\n\n" + errorText);
 
                 if (submitBtn) {
@@ -1339,8 +1338,7 @@
             });
     });
 });
-
-
+</script>
 
 </script>
 
