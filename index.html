@@ -1271,7 +1271,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const contactForm = document.getElementById("contactForm");
     if (!contactForm) return;
 
-    // Direct initialization
     emailjs.init("xqdwGfK4cMabVNkIF");
 
     contactForm.addEventListener("submit", function (event) {
@@ -1314,7 +1313,6 @@ document.addEventListener("DOMContentLoaded", function () {
             to_email: "sales@eduviora.in"
         };
 
-        // 4th argument explicitly provides the Public Key
         emailjs.send("service_eduviora", "template_2vlmhhp", templateParams, "xqdwGfK4cMabVNkIF")
             .then(function () {
                 contactForm.reset();
