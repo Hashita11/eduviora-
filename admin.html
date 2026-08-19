@@ -1,0 +1,587 @@
+<!-- =========================================================
+     EDUVIORA CONTACT FORM
+========================================================= -->
+
+<section id="contact" class="eduviora-contact-section">
+
+    <div class="eduviora-contact-container">
+
+        <div class="eduviora-contact-heading">
+            <h2>Contact Us</h2>
+            <p>
+                Tell us what you need and our Eduviora team will contact you.
+            </p>
+        </div>
+
+        <form id="contactForm" class="eduviora-contact-form">
+
+            <!-- NAME -->
+            <div class="form-group">
+                <label for="user_name">Name *</label>
+
+                <input
+                    type="text"
+                    id="user_name"
+                    name="from_name"
+                    placeholder="Enter your name"
+                    autocomplete="name"
+                    required
+                >
+            </div>
+
+
+            <!-- PHONE -->
+            <div class="form-group">
+                <label for="user_phone">Phone *</label>
+
+                <input
+                    type="tel"
+                    id="user_phone"
+                    name="phone"
+                    placeholder="Enter your phone number"
+                    autocomplete="tel"
+                    inputmode="tel"
+                    required
+                >
+            </div>
+
+
+            <!-- EMAIL -->
+            <div class="form-group">
+                <label for="user_email">Email *</label>
+
+                <input
+                    type="email"
+                    id="user_email"
+                    name="from_email"
+                    placeholder="Enter your email address"
+                    autocomplete="email"
+                    required
+                >
+            </div>
+
+
+            <!-- SOLUTION -->
+            <div class="form-group">
+                <label for="user_solution">Solution *</label>
+
+                <select
+                    id="user_solution"
+                    name="solution"
+                    required
+                >
+                    <option value="">Select a solution</option>
+
+                    <option value="School ERP">
+                        School ERP
+                    </option>
+
+                    <option value="College ERP">
+                        College ERP
+                    </option>
+
+                    <option value="Mobile App Development">
+                        Mobile App Development
+                    </option>
+
+                    <option value="Custom Software">
+                        Custom Software
+                    </option>
+
+                    <option value="Website Development">
+                        Website Development
+                    </option>
+
+                    <option value="Automation">
+                        Automation
+                    </option>
+
+                    <option value="Digital Solutions">
+                        Digital Solutions
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+            </div>
+
+
+            <!-- MESSAGE -->
+            <div class="form-group">
+                <label for="user_message">Message *</label>
+
+                <textarea
+                    id="user_message"
+                    name="message"
+                    rows="6"
+                    placeholder="Tell us about your requirement..."
+                    required
+                ></textarea>
+            </div>
+
+
+            <!-- SUBMIT -->
+            <button
+                type="submit"
+                id="contactSubmitButton"
+                class="eduviora-submit-button"
+            >
+                Send Message
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CONTACT FORM CSS
+========================================================= -->
+
+<style>
+
+.eduviora-contact-section {
+    width: 100%;
+    padding: 70px 20px;
+    box-sizing: border-box;
+}
+
+.eduviora-contact-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.eduviora-contact-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.eduviora-contact-heading h2 {
+    font-size: 38px;
+    margin: 0 0 10px;
+    font-weight: 700;
+}
+
+.eduviora-contact-heading p {
+    font-size: 17px;
+    margin: 0;
+    opacity: 0.8;
+}
+
+.eduviora-contact-form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px 16px;
+    border: 1px solid #d5dbe5;
+    border-radius: 10px;
+    font-size: 16px;
+    background: #ffffff;
+    color: #111827;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #1261a8;
+    box-shadow: 0 0 0 3px rgba(18, 97, 168, 0.12);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 140px;
+}
+
+.eduviora-submit-button {
+    width: 100%;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #125baa;
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.eduviora-submit-button:hover {
+    opacity: 0.92;
+}
+
+.eduviora-submit-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+
+    .eduviora-contact-section {
+        padding: 45px 18px;
+    }
+
+    .eduviora-contact-heading h2 {
+        font-size: 30px;
+    }
+
+    .eduviora-contact-heading p {
+        font-size: 15px;
+    }
+
+}
+
+</style>
+
+
+<!-- =========================================================
+     EMAILJS SDK V4
+========================================================= -->
+
+<script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+
+
+<!-- =========================================================
+     EDUVIORA EMAIL + WHATSAPP
+========================================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =====================================================
+       YOUR EMAILJS DETAILS
+    ===================================================== */
+
+    const PUBLIC_KEY = "xqdwGfK4cMabVNkIF";
+
+    const SERVICE_ID = "service_eduviora";
+
+    const TEMPLATE_ID = "template_2vlmhhp";
+
+
+    /* =====================================================
+       WHATSAPP NUMBER
+    ===================================================== */
+
+    const WHATSAPP_NUMBER = "919000846009";
+
+
+    /* =====================================================
+       INITIALIZE EMAILJS
+    ===================================================== */
+
+    emailjs.init({
+        publicKey: PUBLIC_KEY
+    });
+
+
+    /* =====================================================
+       FIND FORM
+    ===================================================== */
+
+    const contactForm =
+        document.getElementById("contactForm");
+
+    if (!contactForm) {
+
+        console.error(
+            "Eduviora: contactForm not found."
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       SUBMIT EVENT
+    ===================================================== */
+
+    contactForm.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
+
+
+            /* =============================================
+               GET FORM FIELDS
+            ============================================= */
+
+            const name =
+                document
+                    .getElementById("user_name")
+                    .value
+                    .trim();
+
+            const phone =
+                document
+                    .getElementById("user_phone")
+                    .value
+                    .trim();
+
+            const email =
+                document
+                    .getElementById("user_email")
+                    .value
+                    .trim();
+
+            const solution =
+                document
+                    .getElementById("user_solution")
+                    .value
+                    .trim();
+
+            const message =
+                document
+                    .getElementById("user_message")
+                    .value
+                    .trim();
+
+
+            /* =============================================
+               VALIDATION
+            ============================================= */
+
+            if (
+                !name ||
+                !phone ||
+                !email ||
+                !solution ||
+                !message
+            ) {
+
+                alert(
+                    "Please fill in all required fields."
+                );
+
+                return;
+            }
+
+
+            /* =============================================
+               SUBMIT BUTTON
+            ============================================= */
+
+            const submitButton =
+                document.getElementById(
+                    "contactSubmitButton"
+                );
+
+            if (submitButton) {
+
+                submitButton.disabled = true;
+
+                submitButton.textContent =
+                    "Sending...";
+            }
+
+
+            /* =============================================
+               WHATSAPP MESSAGE
+            ============================================= */
+
+            const whatsappMessage =
+                "*New Inquiry - Eduviora Website*" +
+                "\n\n" +
+
+                "*Name:* " +
+                name +
+
+                "\n*Phone:* " +
+                phone +
+
+                "\n*Email:* " +
+                email +
+
+                "\n*Solution:* " +
+                solution +
+
+                "\n*Message:* " +
+                message;
+
+
+            const whatsappURL =
+                "https://wa.me/" +
+                WHATSAPP_NUMBER +
+                "?text=" +
+                encodeURIComponent(
+                    whatsappMessage
+                );
+
+
+            /* =============================================
+               OPEN WHATSAPP IMMEDIATELY
+
+               IMPORTANT:
+               This is independent of EmailJS.
+               Even if EmailJS returns
+               "Account not found", the enquiry
+               can still reach WhatsApp.
+            ============================================= */
+
+            let whatsappWindow = null;
+
+            try {
+
+                whatsappWindow =
+                    window.open(
+                        whatsappURL,
+                        "_blank"
+                    );
+
+            } catch (whatsappError) {
+
+                console.error(
+                    "WhatsApp open error:",
+                    whatsappError
+                );
+
+            }
+
+
+            /* =============================================
+               EMAILJS TEMPLATE PARAMETERS
+
+               These names MUST match your template:
+               {{from_name}}
+               {{phone}}
+               {{from_email}}
+               {{solution}}
+               {{message}}
+            ============================================= */
+
+            const templateParams = {
+
+                from_name: name,
+
+                phone: phone,
+
+                from_email: email,
+
+                solution: solution,
+
+                message: message
+
+            };
+
+
+            /* =============================================
+               SEND EMAIL THROUGH EMAILJS
+            ============================================= */
+
+            emailjs.send(
+                SERVICE_ID,
+                TEMPLATE_ID,
+                templateParams
+            )
+
+            .then(function (response) {
+
+                console.log(
+                    "Eduviora EmailJS SUCCESS:",
+                    response.status,
+                    response.text
+                );
+
+
+                alert(
+                    "Inquiry submitted successfully!\n\n" +
+                    "Email sent to sales@eduviora.in.\n" +
+                    "WhatsApp enquiry is also ready."
+                );
+
+
+                /* Reset form */
+
+                contactForm.reset();
+
+
+                /* Restore button */
+
+                if (submitButton) {
+
+                    submitButton.disabled = false;
+
+                    submitButton.textContent =
+                        "Send Message";
+                }
+
+            })
+
+            .catch(function (error) {
+
+                console.error(
+                    "Eduviora EmailJS ERROR:",
+                    error
+                );
+
+
+                let errorText =
+                    "Unable to send email.";
+
+
+                if (error && error.text) {
+
+                    errorText =
+                        error.text;
+                }
+
+
+                /*
+                 * IMPORTANT:
+                 * WhatsApp was already opened
+                 * independently.
+                 */
+
+                alert(
+                    "EmailJS could not send the email.\n\n" +
+                    "Error: " +
+                    errorText +
+                    "\n\n" +
+                    "Please continue with WhatsApp."
+                );
+
+
+                /* Restore button */
+
+                if (submitButton) {
+
+                    submitButton.disabled = false;
+
+                    submitButton.textContent =
+                        "Send Message";
+                }
+
+            });
+
+        }
+    );
+
+});
+
+</script>
