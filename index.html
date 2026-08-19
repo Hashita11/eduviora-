@@ -1263,89 +1263,138 @@
 
 
 
-<!-- EmailJS SDK -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<!-- =========================
+     EMAILJS
+========================= -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const contactForm = document.getElementById("contactForm");
-    if (!contactForm) return;
 
-    contactForm.addEventListener("submit", async function (event) {
-        event.preventDefault();
+    const PUBLIC_KEY = "xqdwGfK4cMabVNkIF";
+    const SERVICE_ID = "service_eduviora";
+    const TEMPLATE_ID = "template_2vlmhhp";
 
-        const submitBtn = this.querySelector('button[type="submit"]');
-        const originalBtnText = submitBtn ? submitBtn.textContent : "Send Message";
+    emailjs.init(PUBLIC_KEY);
 
-        const name = document.getElementById("user_name").value.trim();
-        const phone = document.getElementById("user_phone").value.trim();
-        const email = document.getElementById("user_email").value.trim();
-        const solution = document.getElementById("user_solution").value;
-        const message = document.getElementById("user_message").value.trim();
+    const form = document.getElementById("contactForm");
 
-        if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.textContent = "Sending...";
+    if (!form) {
+        console.error("contactForm not found");
+        return;
+    }
+
+    form.addEventListener("submit", function (e) {
+
+        e.preventDefault();
+
+        const name = document.getElementById("user_name")?.value.trim() || "";
+        const phone = document.getElementById("user_phone")?.value.trim() || "";
+        const email = document.getElementById("user_email")?.value.trim() || "";
+        const solution = document.getElementById("user_solution")?.value || "";
+        const message = document.getElementById("user_message")?.value.trim() || "";
+
+        if (!name || !phone || !email || !solution || !message) {
+            alert("Please fill in all required fields.");
+            return;
         }
 
-        // 1. WhatsApp Configuration
-        const whatsappNumber = "919000846009";
-        const rawMessage = `*New Inquiry via Eduviora Website*\n\n` +
-                           `*Name:* ${name}\n` +
-                           `*Phone:* ${phone}\n` +
-                           `*Email:* ${email}\n` +
-                           `*Solution:* ${solution}\n` +
-                           `*Message:* ${message}`;
-        const encodedMessage = encodeURIComponent(rawMessage);
+        const button = form.querySelector('button[type="submit"]');
 
-        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-        const whatsappURL = isMobile
-            ? `whatsapp://send?phone=${whatsappNumber}&text=${encodedMessage}`
-            : `https://web.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedMessage}`;
+        if (button) {
+            button.disabled = true;
+            button.textContent = "Sending...";
+        }
 
-        // 2. Direct EmailJS REST Payload
-        const payload = {
-            service_id: "service_eduviora",
-            template_id: "template_2vlmhhp",
-            user_id: "xqdwGfK4cMabVNkIF",
-            template_params: {
-                from_name: name,
-                phone: phone,
-                from_email: email,
-                solution: solution,
-                message: message,
-                to_email: "sales@eduviora.in"
-            }
+        /* =========================
+           WHATSAPP MESSAGE
+        ========================= */
+
+        const whatsappMessage =
+            "*New Inquiry - Eduviora Website*\n\n" +
+            "*Name:* " + name + "\n" +
+            "*Phone:* " + phone + "\n" +
+            "*Email:* " + email + "\n" +
+            "*Solution:* " + solution + "\n" +
+            "*Message:* " + message;
+
+        const whatsappURL =
+            "https://wa.me/919000846009?text=" +
+            encodeURIComponent(whatsappMessage);
+
+
+        /* =========================
+           EMAILJS DATA
+        ========================= */
+
+        const templateParams = {
+            from_name: name,
+            phone: phone,
+            from_email: email,
+            solution: solution,
+            message: message
         };
 
-        try {
-            const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(payload)
-            });
 
-            if (!response.ok) {
-                const err = await response.text();
-                console.error("EmailJS API response:", err);
+        /* =========================
+           SEND EMAIL
+        ========================= */
+
+        emailjs.send(
+            SERVICE_ID,
+            TEMPLATE_ID,
+            templateParams
+        )
+
+        .then(function (response) {
+
+            console.log("EMAIL SENT:", response);
+
+            alert(
+                "Thank you! Your inquiry has been sent successfully."
+            );
+
+            form.reset();
+
+            if (button) {
+                button.disabled = false;
+                button.textContent = "Send Message";
             }
-        } catch (err) {
-            console.error("Network dispatch error:", err);
-        } finally {
-            contactForm.reset();
-            if (submitBtn) {
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalBtnText;
+
+            /* Open WhatsApp after email success */
+            window.open(whatsappURL, "_blank");
+
+        })
+
+        .catch(function (error) {
+
+            console.error("EMAILJS ERROR:", error);
+
+            /*
+             * EMAIL FAILED
+             * BUT DO NOT LOSE THE CUSTOMER
+             */
+
+            alert(
+                "Email could not be sent right now.\n\n" +
+                "We will continue through WhatsApp."
+            );
+
+            if (button) {
+                button.disabled = false;
+                button.textContent = "Send Message";
             }
-            window.location.href = whatsappURL;
-        }
+
+            /*
+             * WhatsApp works independently
+             */
+            window.open(whatsappURL, "_blank");
+
+        });
+
     });
+
 });
-
-
-
 </script>
 
 
